@@ -1,41 +1,38 @@
 import { router } from "expo-router";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import React, { useCallback, useState } from "react";
+import { Pressable, Text, View } from "react-native";
 
 import NavHeader from "@/components/navigation/nav-header";
 
-const Button = ({
-  title,
-  onPress,
-}: {
-  title: string;
-  onPress?: () => void;
-}) => {
-  console.log(`Render ${title} button`);
+const Button = React.memo(
+  ({ title, onPress }: { title: string; onPress?: () => void }) => {
+    console.log(`Render ${title} button`);
 
-  return (
-    <Pressable
-      style={({ pressed }) => ({
-        opacity: pressed ? 0.6 : 1,
-        backgroundColor: "grey",
-        padding: 20,
-      })}
-      onPress={onPress}
-    >
-      <Text style={{ color: "white", fontWeight: "bold" }}> {title}</Text>
-    </Pressable>
-  );
-};
+    return (
+      <Pressable
+        style={({ pressed }) => ({
+          opacity: pressed ? 0.6 : 1,
+          backgroundColor: "grey",
+          padding: 20,
+        })}
+        onPress={onPress}
+      >
+        <Text style={{ color: "white", fontWeight: "bold" }}> {title}</Text>
+      </Pressable>
+    );
+  }
+);
 
 const Example1 = () => {
-  const count = 0;
+  const [count, setCount] = useState<number>(0);
 
-  const onDecrement = () => {
-    //
-  };
+  const onDecrement = useCallback(() => {
+    setCount((value) => value - 1);
+  }, []);
 
-  const onIncrement = () => {
-    //
-  };
+  const onIncrement = useCallback(() => {
+    setCount((value) => value + 1);
+  }, []);
 
   return (
     <View
@@ -45,32 +42,21 @@ const Example1 = () => {
     >
       <NavHeader title="Counter Example" onPressBack={() => router.back()} />
 
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          gap: 16,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 16,
+          }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 16,
-            }}
-          >
-            <Button title="Decrement" onPress={onDecrement} />
+          <Button title="Decrement" onPress={onDecrement} />
 
-            <Text>{count}</Text>
+          <Text>{count}</Text>
 
-            <Button title="Increment" onPress={onIncrement} />
-          </View>
+          <Button title="Increment" onPress={onIncrement} />
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 };
