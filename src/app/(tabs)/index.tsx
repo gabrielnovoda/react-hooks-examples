@@ -49,12 +49,12 @@ const HomeScreen = () => {
         />
 
         <Item
-          text="List Example"
+          text="Timer Example"
           onPress={() => router.navigate("/example3")}
         />
 
         <Item
-          text="Separation of Concerns / Testing"
+          text="Separation of Concerns"
           onPress={() => router.navigate("/example4")}
         />
       </ScrollView>

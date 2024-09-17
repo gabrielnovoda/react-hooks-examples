@@ -12,7 +12,7 @@ const Example4 = () => {
       }}
     >
       <NavHeader
-        title="Separation of Concerns / Testing"
+        title="Separation of Concerns"
         onPressBack={() => router.back()}
       />
 

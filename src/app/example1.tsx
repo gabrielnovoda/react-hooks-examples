@@ -1,8 +1,9 @@
 import { router } from "expo-router";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Pressable, Text, View } from "react-native";
 
 import NavHeader from "@/components/navigation/nav-header";
+import { useCounter } from "@/hooks/use-counter";
 
 const Button = React.memo(
   ({ title, onPress }: { title: string; onPress?: () => void }) => {
@@ -24,15 +25,7 @@ const Button = React.memo(
 );
 
 const Example1 = () => {
-  const [count, setCount] = useState<number>(0);
-
-  const onDecrement = useCallback(() => {
-    setCount((value) => value - 1);
-  }, []);
-
-  const onIncrement = useCallback(() => {
-    setCount((value) => value + 1);
-  }, []);
+  const { value, onIncrement, onDecrement } = useCounter();
 
   return (
     <View
@@ -52,7 +45,7 @@ const Example1 = () => {
         >
           <Button title="Decrement" onPress={onDecrement} />
 
-          <Text>{count}</Text>
+          <Text>{value}</Text>
 
           <Button title="Increment" onPress={onIncrement} />
         </View>
